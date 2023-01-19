@@ -23,6 +23,7 @@ export class User {
 
   @Column({
     nullable: false,
+    type: Number,
     default: UserStatus.Inactive,
   })
   status: UserStatus;

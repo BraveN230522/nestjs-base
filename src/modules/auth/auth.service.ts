@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
 import _ from 'lodash';
 import { Role } from '../../enums';
+import { ErrorHelper } from '../../helpers';
 import { Admin } from '../admin/admin.entity';
 import { AdminService } from '../admin/admin.service';
 import { User } from '../users/users.entity';
@@ -29,12 +30,14 @@ export class AuthService {
     const match =
       (await bcrypt.compare(password || '', found?.password || '')) && username === found?.username;
 
-    if (!match) throw new UnauthorizedException(`Username or password is incorrect`);
+    if (!match) ErrorHelper.UnauthorizedException(`Username or password is incorrect`);
 
     const payload = { username, role: found.role };
     const accessToken = await this.jwtService.sign(payload);
 
-    const mappingResponse = _.omit(found, ['password']);
+    const mappingResponse = _.omit(found, ['password', 'role']);
+
+    await this.adminService.updateAdmin(found.id, { token: accessToken });
 
     return {
       ...mappingResponse,
@@ -53,16 +56,17 @@ export class AuthService {
     // });
     // return;
     const found = await this.userService.getUserByUsername({ username });
-
     const match =
       (await bcrypt.compare(password || '', found?.password || '')) && username === found?.username;
 
-    if (!match) throw new UnauthorizedException(`Username or password is incorrect`);
+    if (!match) ErrorHelper.UnauthorizedException(`Username or password is incorrect`);
 
     const payload = { username, role: found.role };
     const accessToken = await this.jwtService.sign(payload);
 
-    const mappingResponse = _.omit(found, ['password']);
+    await this.userService.updateUser(found.id, { token: accessToken });
+
+    const mappingResponse = _.omit(found, ['password', 'role']);
 
     return {
       ...mappingResponse,
