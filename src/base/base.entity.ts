@@ -1,5 +1,5 @@
 import { IsDate, IsNumber } from 'class-validator';
-import { Column, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 export abstract class BaseTable {
   @PrimaryGeneratedColumn('increment')
@@ -18,7 +18,7 @@ export abstract class BaseTable {
     type: 'timestamp with time zone',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  @CreateDateColumn({ type: 'timestamp with time zone' })
+  @UpdateDateColumn({ type: 'timestamp with time zone' })
   @IsDate()
   public updatedAt: Date;
 }
