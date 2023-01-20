@@ -35,7 +35,7 @@ export class AuthService {
     const payload = { username, role: found.role };
     const accessToken = await this.jwtService.sign(payload);
 
-    const mappingResponse = _.omit(found, ['password', 'role']);
+    const mappingResponse = _.omit(found, ['password', 'role']) as Admin;
 
     await this.adminService.updateAdmin(found.id, { token: accessToken });
 
@@ -66,7 +66,7 @@ export class AuthService {
 
     await this.userService.updateUser(found.id, { token: accessToken });
 
-    const mappingResponse = _.omit(found, ['password', 'role']);
+    const mappingResponse = _.omit(found, ['password', 'role']) as User;
 
     return {
       ...mappingResponse,
