@@ -1,6 +1,7 @@
 import { IsDate, IsNumber } from 'class-validator';
 import { Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
+//ISOstring time
 export abstract class BaseTable {
   @PrimaryGeneratedColumn('increment')
   @IsNumber()
