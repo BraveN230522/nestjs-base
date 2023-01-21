@@ -2,7 +2,7 @@ import { IsNumber } from 'class-validator';
 import { BeforeUpdate, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 //Unix timestamp
-
+//HAPPY NEW YEAR 2023
 export abstract class BaseTable {
   @PrimaryGeneratedColumn('increment')
   @IsNumber()
