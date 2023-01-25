@@ -29,8 +29,13 @@ export class BaseRepository<Model extends BaseTable> extends Repository<Model> {
     return instanceToPlain(await this.repo.save(entities)) as Array<Model>;
   }
 
-  async find(conditions, options?: FindManyOptions<Model>): Promise<Model[]> {
-    return instanceToPlain(await this.repo.find({ where: conditions, ...options })) as Model[];
+  async find(conditions?: any, options?: FindManyOptions<Model>): Promise<Model[]> {
+    return instanceToPlain(
+      await this.repo.find({
+        where: conditions as FindOptionsWhere<Model>[] | FindOptionsWhere<Model>,
+        ...options,
+      }),
+    ) as Model[];
   }
 
   async findRaw(conditions, options?: FindOneOptions<Model>): Promise<Model[]> {
@@ -45,8 +50,8 @@ export class BaseRepository<Model extends BaseTable> extends Repository<Model> {
     return await this.repo.findOneBy(opts);
   }
 
-  async findOne(options: FindOneOptions<Model>): Promise<Model> {
-    return (await instanceToPlain(this.repo.findOne(options))) as Model;
+  async findOne(conditions, options?: FindOneOptions<Model>): Promise<Model> {
+    return (await instanceToPlain(this.repo.findOne({ where: conditions, ...options }))) as Model;
   }
 
   async findOneRaw(conditions, options?: FindOneOptions<Model>): Promise<Model> {
@@ -122,11 +127,11 @@ export class BaseRepository<Model extends BaseTable> extends Repository<Model> {
     pageOptions: IPageOption,
     isRaw?: boolean,
   ): Promise<IPaginationResponse<Model>> {
-    const { perPage, page } = numberInputs(pageOptions);
+    const { perPage = 10, page = 1 } = numberInputs(pageOptions);
     const total = await queryBuilder.getCount();
     const result = await queryBuilder
       .skip(perPage * (page - 1))
-      .take(perPage)
+      .take(perPage || 10)
       .getMany();
 
     return {

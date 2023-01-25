@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from '../auth/auth.module';
-import { User } from '../users/users.entity';
+import { Task } from '../entities/tasks.entity';
+import { User } from '../entities/users.entity';
 import { TasksController } from './tasks.controller';
-import { Task } from './tasks.entity';
 import { TasksRepository } from './tasks.repository';
 import { TasksService } from './tasks.service';
 

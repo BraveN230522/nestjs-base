@@ -14,8 +14,8 @@ import _ from 'lodash';
 import { RoleDecorator } from '../../common/decorators';
 import { RolesGuard } from '../../common/guards';
 import { Role } from '../../enums';
+import { User } from '../entities/users.entity';
 import { CreateUserDto, FilterUserDto } from './dto/users.dto';
-import { User } from './users.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')

@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import bcrypt from 'bcrypt';
 import { assignIfHasKey } from '../../utilities';
-import { Task } from './tasks.entity';
+import { Task } from '../entities/tasks.entity';
 import { TasksRepository } from './tasks.repository';
 
 @Injectable()

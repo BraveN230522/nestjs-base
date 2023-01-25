@@ -7,8 +7,8 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 // import { AdminGuard } from '@nestjs/passport';
-import { Admin } from '../admin/admin.entity';
-import { User } from '../users/users.entity';
+import { Admin } from '../entities/admin.entity';
+import { User } from '../entities/users.entity';
 import { AuthService } from './auth.service';
 import { AdminCredentialsDto } from './dto/auth.dto';
 
